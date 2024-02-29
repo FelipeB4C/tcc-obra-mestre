@@ -1,0 +1,7 @@
+Inicialmente que o sistemas seja um banco de dados de prestadores de serviços como
+pedreiros, arquitetos, engenheiros e designer de interiores.
+
+Evoluindo para um sistema onde os usuários possam se cadastrar para avaliar os "freelancers"
+e que na própria plataforma tenha uma espécie de contrato para formalizar o trabalho, além
+de que os próprios clientes também tenha uma avaliação para os contratados possam ter um
+parâmetro.
