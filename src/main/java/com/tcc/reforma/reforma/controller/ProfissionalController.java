@@ -41,7 +41,6 @@ public class ProfissionalController {
         Usuario usuario = userRepository.findById(id).get();
         Profissional profissional = request.toModel(usuario);
         usuario.setProfissional(profissional);
-        //profRepository.save(profissional);
         userRepository.save(usuario);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(profissional.getId()).toUri();
@@ -59,7 +58,6 @@ public class ProfissionalController {
     @GetMapping("/todos")
     public ResponseEntity<List<ProfissionalDetailDTO>> listaTodos() {
         List<Usuario> listaUsuarios = userRepository.findAllProfessionals();
-        System.out.println("Usuarios: "+ listaUsuarios);
         List<ProfissionalDetailDTO> listaProfessional = listaUsuarios.stream().map(ProfissionalDetailDTO::new).toList();
         return ResponseEntity.ok().body(listaProfessional);
     }

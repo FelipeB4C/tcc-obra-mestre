@@ -6,6 +6,7 @@ import lombok.Getter;
 public class UsuarioDetailDTO {
 
     private Long id;
+    private Long idProfissional;
     private String nome;
     private String tipoUsuario;
     private String cpfOuCnpj;
@@ -20,6 +21,7 @@ public class UsuarioDetailDTO {
 
     public UsuarioDetailDTO(Usuario usuario) {
         this.id = usuario.getId();
+        this.idProfissional = (usuario.getProfissional() != null) ? usuario.getProfissional().getId() : null;
         this.nome = usuario.getNome();
         this.tipoUsuario = usuario.getTipoUsuario().descricao();
         this.cpfOuCnpj = usuario.getCpfOuCnpj();

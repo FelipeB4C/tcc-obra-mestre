@@ -41,13 +41,16 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
-                //.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .sessionManagement(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario/cadastrar").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuario/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/usuario/fotoPerfil").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/usuario/listarUm/**").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/usuario/atualizar/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/usuario/avaliarCliente/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/profissional").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT, "/profissional/**").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/profissional").hasRole("USER")
@@ -65,11 +68,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        //Make the below setting as * to allow connection from any hos
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173/"));
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setExposedHeaders(List.of("Location")); // Adicione esta linha
         corsConfiguration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

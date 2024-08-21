@@ -36,7 +36,7 @@ public class UsuarioInsertValidator implements ConstraintValidator<UsuarioInsert
             list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
         }
 
-        UserDetails aux = repository.findByEmail(objDto.getEmail());
+        Usuario aux = repository.findByEmail(objDto.getEmail());
             if (aux != null) {
                 list.add(new FieldMessage("email", "Email já existe"));
             }

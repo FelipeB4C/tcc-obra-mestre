@@ -2,6 +2,7 @@ package com.tcc.reforma.reforma.controller;
 
 import com.tcc.reforma.reforma.domain.auth.AuthenticationDTO;
 import com.tcc.reforma.reforma.domain.auth.LoginResponseDTO;
+import com.tcc.reforma.reforma.domain.usuario.UserLogin;
 import com.tcc.reforma.reforma.domain.usuario.Usuario;
 import com.tcc.reforma.reforma.service.TokenService;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class AuthenticationController {
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO request) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(request.login(), request.senha());
         var auth = authMenager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+        var token = tokenService.generateToken((UserLogin) auth.getPrincipal());
 
         return ResponseEntity.ok().body(new LoginResponseDTO(token));
     }

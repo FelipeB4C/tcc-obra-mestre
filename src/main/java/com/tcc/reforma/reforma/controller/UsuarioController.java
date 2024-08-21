@@ -4,7 +4,9 @@ import com.tcc.reforma.reforma.domain.profissional.InsertScoreDTO;
 import com.tcc.reforma.reforma.domain.projeto.Projeto;
 import com.tcc.reforma.reforma.domain.usuario.Usuario;
 import com.tcc.reforma.reforma.domain.usuario.UsuarioCreateDTO;
+import com.tcc.reforma.reforma.domain.usuario.UsuarioDetailDTO;
 import com.tcc.reforma.reforma.domain.usuario.UsuarioUpdateDTO;
+import com.tcc.reforma.reforma.exception.ObjectNotFoundException;
 import com.tcc.reforma.reforma.repository.ProjetoRepository;
 import com.tcc.reforma.reforma.repository.UsuarioRepository;
 import com.tcc.reforma.reforma.service.S3Service;
@@ -52,8 +54,25 @@ public class UsuarioController {
             return ResponseEntity.created(uri).build();
     }
 
+    @GetMapping("/listarUm/{id}")
+    public ResponseEntity<UsuarioDetailDTO> listarDadosUsuario(@PathVariable Long id){
+        UsuarioDetailDTO usuarioDTO = new UsuarioDetailDTO(userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado! Id: "+id)));
+        return ResponseEntity.ok().body(usuarioDTO);
 
-    @PutMapping("/atualizar/{id}")
+    }
+
+
+    @GetMapping("/listarPorEmail/{email}")
+    public ResponseEntity<UsuarioDetailDTO> listarDadosUsuario(@PathVariable String email) {
+        UsuarioDetailDTO usuarioDTO = new UsuarioDetailDTO(userRepository.findByEmailOpt(email)
+                .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado! Email: " + email)));
+        return ResponseEntity.ok().body(usuarioDTO);
+    }
+
+
+
+        @PutMapping("/atualizar/{id}")
     public ResponseEntity<Void> atualizaUsuario(@RequestBody @Valid UsuarioUpdateDTO request, @PathVariable Long id) {
         Usuario usuario = userRepository.findById(id).get();
         request.updateData(usuario);

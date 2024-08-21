@@ -6,7 +6,7 @@ public enum Ocupacao {
     ELETRICISTA(1, "Eletricista"),
     DSGN_INTERIORES(2, "Designer de Interiores"),
     ARQUITETO(3, "Arquiteto"),
-    ENGENHEIRO(4, "ENGENHEIRO");
+    ENGENHEIRO(4, "Engenheiro");
 
     private final Integer id;
     private final String descricao;
